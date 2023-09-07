@@ -2,19 +2,46 @@ let express = require("express");
 let app = express();
 require("dotenv").config();
 const readline = require("readline");
+app.use(express.urlencoded({ extended: true }));
+
+// app.get("/question", (req, res) => {
+//   const rl = readline.createInterface({
+//     input: process.stdin,
+//     output: process.stdout,
+//   });
+
+//   rl.question("Please enter a color? ", (value) => {
+//     let color = value;
+//     console.log(`You entered ${color}`);
+//     res.send(`You entered ${color}`);
+//     rl.close();
+//   });
+// });
 
 app.get("/question", (req, res) => {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
+  res.send(`
+    <html>
+      <body>
+        <form action="/answer" method="POST">
+          <label for="color">Por favor ingresa tu nombre</label>
+          <input type="text" id="color" name="color">
+          <button type="submit">Submit</button>
+        </form>
+      </body>
+    </html>
+  `);
+});
 
-  rl.question("Please enter a color? ", (value) => {
-    let color = value;
-    console.log(`You entered ${color}`);
-    res.send(`You entered ${color}`);
-    rl.close();
-  });
+app.post("/answer", (req, res) => {
+  const color = req.body.color;
+  res.send(`
+    <html>
+      <body>
+        <p>Tu nombre es  ${color}</p>
+        <a href="/question">Juega de nuevo</a>
+      </body>
+    </html>
+  `);
 });
 
 const port = 3001;

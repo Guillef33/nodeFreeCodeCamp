@@ -3,8 +3,10 @@ let app = express();
 
 const port = 3001;
 
+absolutePath = __dirname + "/views/index.html";
+
 app.get("/", (req, res) => {
-  res.send(`Hello Express`);
+  res.send(absolutePath);
 });
 
 app.listen(port, () => {

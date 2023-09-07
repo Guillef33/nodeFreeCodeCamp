@@ -11,6 +11,18 @@ h1 {
   font-size: 4em;
 }
 
-input[type=text], label {
+input[type=text],
+label {
   margin-bottom: 8px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.navigation li a {
+  color: white;
+  text-decoration: none;
 }

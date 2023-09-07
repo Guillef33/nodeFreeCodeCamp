@@ -1,4 +1,8 @@
+let bodyParser = require("body-parser");
+
 module.exports = function (app) {
+  let urlencodedParser = bodyParser.urlencoded({ extended: false });
+
   app.get("/question", (req, res) => {
     res.send(`
           <html>
@@ -13,7 +17,7 @@ module.exports = function (app) {
         `);
   });
 
-  app.post("/answer", (req, res) => {
+  app.post("/answer", urlencodedParser, function (req, res) {
     const color = req.body.color;
     res.send(`
           <html>
@@ -24,6 +28,7 @@ module.exports = function (app) {
           </html>
         `);
   });
+
   app.use("/json", (req, res, next) => {
     console.log(req.method + req.path + req.ip);
     next();
@@ -50,7 +55,11 @@ module.exports = function (app) {
 
   app.get("/echo", (req, res) => {
     res.send(
-      "Escribe una palabra luego de echo/ en la URL del navegador y la mostraremos como un JSON"
+      `<html>
+        <body> 
+            <h2>Escribe una palabra luego de echo/ en la URL del navegador y la mostraremos como un JSON</h2>         
+        </body>
+      </html>`
     );
   });
 
@@ -59,14 +68,31 @@ module.exports = function (app) {
     res.json({ echo: word });
   });
 
+  app.get("/crud", (req, res) => {});
+
   app.get("/name", (req, res) => {
     name = req.query;
     if (Object.keys(req.query).length === 0) {
       res.send(
-        "Escribe tu nombre con la siguiente escructura y pegala en la barra de busqueda ?nombre=Carlos&apellido=Fernandez&edad=21"
+        `<html>
+            <body> 
+            <h2>Escribe tu nombre con la siguiente escructura y pegala en la barra de busqueda ?nombre=Carlos&apellido=Fernandez&edad=21</h2>       
+            </body>
+        </html>`
       );
     } else {
       res.json({ name: name });
     }
+  });
+
+  app.post("/your-name", urlencodedParser, function (req, res) {
+    const firstName = req.body.first;
+    const lastName = req.body.last;
+
+    res.send("welcome, " + firstName + lastName);
+  });
+
+  app.get("/", (req, res) => {
+    res.sendFile(absolutePath);
   });
 };

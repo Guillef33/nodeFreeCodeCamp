@@ -1,26 +1,22 @@
 let express = require("express");
+let bodyParser = require("body-parser");
 let app = express();
 require("dotenv").config();
-const port = 3001;
-const readline = require("readline");
-app.use(express.urlencoded({ extended: true }));
 require("./routes/routes")(app);
 
-absolutePath = __dirname + "/views/index.html";
+const port = 3001;
+
+app.use(express.urlencoded({ extended: true }));
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+
 publicAssets = __dirname + "/public";
+absolutePath = __dirname + "/views/index.html";
 
 app.use("/public/", express.static(publicAssets));
-
-app.get("/", (req, res) => {
-  res.sendFile(absolutePath);
-});
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
-
-console.log("Hello World");
 
 module.exports = app;

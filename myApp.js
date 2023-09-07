@@ -4,8 +4,12 @@ let app = express();
 const port = 3001;
 
 absolutePath = __dirname + "/views/index.html";
+publicAssets = __dirname + "/public";
+
+app.use("/public/", express.static(publicAssets));
 
 app.get("/", (req, res) => {
+  // res.send("Hello Express")
   res.sendFile(absolutePath);
 });
 

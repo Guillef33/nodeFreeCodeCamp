@@ -1,36 +1,19 @@
 let bodyParser = require("body-parser");
 
+const {
+  displayQuestion,
+  displayAnswer,
+} = require("../controllers/index.controller");
+
 module.exports = function (app) {
   let urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-  app.get("/question", (req, res) => {
-    res.send(`
-          <html>
-            <body>
-              <form action="/answer" method="POST">
-                <label for="color">Por favor ingresa tu nombre</label>
-                <input type="text" id="color" name="color">
-                <button type="submit">Submit</button>
-              </form>
-            </body>
-          </html>
-        `);
-  });
+  app.get("/question", displayQuestion);
 
-  app.post("/answer", urlencodedParser, function (req, res) {
-    const color = req.body.color;
-    res.send(`
-          <html>
-            <body>
-              <p>Tu nombre es  ${color}</p>
-              <a href="/question">Juega de nuevo</a>
-            </body>
-          </html>
-        `);
-  });
+  app.post("/answer", urlencodedParser, displayAnswer);
 
   app.use("/json", (req, res, next) => {
-    console.log(req.method + req.path + req.ip);
+    res.send(req.method + req.path + req.ip);
     next();
   });
 

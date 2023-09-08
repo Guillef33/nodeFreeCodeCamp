@@ -17,15 +17,7 @@
         <li><a href="/name">Tu nombre</a></li>
       </ul>
     </nav>
-    <h1>Escribe tu nombre</h1>
-    <p>Lo guardaremos en una base de datos de Postgress SQL</p>
-    <img src="../public/images/natal.jpg" alt="beach pic" width="300" />
-    <form action="/your-name" method="post">
-      <label>First Name :</label>
-      <input type="text" name="first" value="Nombre" /><br />
-      <label>Last Name :</label>
-      <input type="text" name="last" value="Apellido" /><br /><br />
-      <input type="submit" value="Submit" />
-    </form>
+    <h1>La hora actual es:</h1>
+    <p><%= time %></p>
   </body>
 </html>
